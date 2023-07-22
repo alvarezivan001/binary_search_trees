@@ -16,6 +16,76 @@ class Tree {
         this.root = buildTree(arr);
     }
 
+    insert(value){
+        let startNode = this.root;
+        let prevNode = null;
+        do{
+            if(startNode.data > value){
+                prevNode = startNode;
+                startNode = startNode.left;
+            }
+            else if(startNode.data < value)
+            {
+                prevNode = startNode;
+                startNode = startNode.right;
+            }
+        }while(startNode != null)
+
+        let insertNode = new Node(value);
+        if(prevNode.data > value){prevNode.left = insertNode;}
+        else if(prevNode.data < value){prevNode.right = insertNode;}
+    }
+
+    delete(value){
+        let tempNode = this.root;
+        let prevNode = null;
+        let isValue = value;
+        while(isValue != tempNode.data){
+            if(isValue < tempNode.data){
+                prevNode = tempNode;
+                tempNode = tempNode.left;
+            }
+            else{
+                prevNode = tempNode;
+                tempNode = tempNode.right;
+            }
+        }
+        if(tempNode.left == null && tempNode.right == null)
+        {
+            if(prevNode.left.data == tempNode.data)
+            {
+                prevNode.left = null;
+            }
+            else
+            {
+                prevNode.right = null;
+            }
+        }
+        else if(tempNode.right == null)
+        {
+            if(prevNode.left == tempNode)
+            {
+                prevNode.left = tempNode.left;
+            }
+            else
+            {
+                prevNode.right = tempNode.left;
+            }
+        }
+        else if(tempNode.left == null)
+        {   
+            if(prevNode.right == tempNode)
+            {
+                prevNode.right = tempNode.right;
+            }
+            else
+            {
+                prevNode.left = tempNode.right;
+            }
+        }    
+
+    }
+
     find(value){
 
         let foundNode = this.root;
@@ -106,8 +176,19 @@ function treeRec(arr2){
     return newNode;
 }
 
-let newTree = new Tree([2,1,5,12,7,4,11,3,6,13,14,9,8,10]);
+let newTree = new Tree([20,10,120,70,40,110,30,60,130,140,90,80,100]);
 
 
 prettyPrint(newTree.root);
-newTree.find(14).print();
+
+
+console.log();
+
+newTree.delete(130);
+
+prettyPrint(newTree.root);
+
+newTree.delete(140);
+newTree.delete(60);
+
+prettyPrint(newTree.root);
