@@ -38,7 +38,12 @@ class Tree {
 
     delete(value){
         let tempNode = this.root;
+        //tempNode will keep track of the Node 
+        // that has (value), to be deleted
         let prevNode = null;
+        //prevNode will keep track of the Node BEFORE
+        // Node(value), so as not to lose track of where 
+        //deletion happened
         let isValue = value;
         while(isValue != tempNode.data){
             if(isValue < tempNode.data){
@@ -82,7 +87,33 @@ class Tree {
             {
                 prevNode.left = tempNode.right;
             }
-        }    
+        } 
+        else{
+            //since the Node seems to have 2 children now, we 
+            //need to find inorder successor (is),  the inorder 
+            //successor's right child, assign (is) to tempNode,
+            //assign (is)'s right child to the left child of
+            //(is)'s parent
+            let inoSuccNode = tempNode.right;
+            let inoSuccParent = tempNode;
+            while(inoSuccNode.left != null)
+            {
+                inoSuccParent = inoSuccNode;
+                inoSuccNode = inoSuccNode.left;
+            }
+
+            if(inoSuccParent == tempNode)
+            {
+                inoSuccParent.right = inoSuccNode.right;
+                tempNode.data = inoSuccNode.data;
+            }
+            else
+            {
+                inoSuccParent.left = inoSuccNode.right;
+                tempNode.data = inoSuccNode.data;
+            }
+            //may not account for root deletion
+        }
 
     }
 
@@ -176,7 +207,7 @@ function treeRec(arr2){
     return newNode;
 }
 
-let newTree = new Tree([20,10,120,70,40,110,30,60,130,140,90,80,100]);
+let newTree = new Tree([200,210,220,230,240,250,260,270,280,290,20,150,160,170,180,190,10,120,70,40,110,30,60,130,140,90,80,100]);
 
 
 prettyPrint(newTree.root);
@@ -184,11 +215,19 @@ prettyPrint(newTree.root);
 
 console.log();
 
-newTree.delete(130);
+// newTree.delete(130);
 
+// prettyPrint(newTree.root);
+
+// newTree.delete(140);
+// newTree.delete(60);
+
+// prettyPrint(newTree.root);
+
+
+newTree.delete(100);
+newTree.insert(125);
+newTree.insert(115);
 prettyPrint(newTree.root);
-
-newTree.delete(140);
-newTree.delete(60);
-
+newTree.delete(90);
 prettyPrint(newTree.root);
