@@ -258,6 +258,53 @@ class Tree {
 
         return d;
     }
+    isBalanced(){
+        
+        let balanced;
+        let height;
+
+        function balanceRec (aNode) {
+
+            if(aNode == null)
+            {
+                return 0;
+            }
+            let leftH = balanceRec(aNode.left);
+            if(leftH == -1)
+            {
+                return -1;
+            }
+            let rightH = balanceRec(aNode.right);
+            if(rightH == -1)
+            {
+                return -1;
+            }
+            if(Math.abs(leftH-rightH) > 1)
+            {
+                return -1;
+            }
+            else
+            {
+                return Math.max(leftH,rightH) +1;
+            }
+        }
+
+        height = balanceRec(this.root);
+
+        if(height > 0)
+        {
+            balanced = true;
+        }
+        else
+        {
+            balanced = false;
+        }
+
+        console.log("is balanced: " + balanced);
+    }
+    reBalance(){
+
+    }
 }
 
 function buildTree(arr) {
@@ -362,4 +409,12 @@ prettyPrint(newTree.root);
 
 // console.log(newTree.depth(newTree.root.left.right.left));
 
-console.log(newTree.height(newTree.root.right));
+console.log(newTree.depth(newTree.root.right.right));
+
+newTree.delete(160);
+newTree.delete(170);
+//
+prettyPrint(newTree.root);
+newTree.delete(190);
+
+newTree.isBalanced();
