@@ -134,6 +134,130 @@ class Tree {
 
         return foundNode;
     }
+
+    levelOrder()
+    {
+        let queue = [];
+        let arrayBFS = [];
+        queue.push(this.root);
+
+        while(queue.length != 0)
+        {
+                let tempNode = queue.shift();
+                arrayBFS.push(tempNode.data);
+                if(tempNode.left != null)
+                {
+                    queue.push(tempNode.left);
+                }
+                if(tempNode.right != null)
+                {
+                    queue.push(tempNode.right);
+                }
+        }
+
+        return arrayBFS;
+    }
+
+    inOrder(){
+        //will write recursion in the this function
+
+        let arrayInO = [];
+        let startingNode = this.root;
+
+        function inOrderRecursion(node){
+            if(node == null)
+            {return;}
+            inOrderRecursion(node.left);
+            arrayInO.push(node.data);
+            inOrderRecursion(node.right);
+        }   
+
+        inOrderRecursion(startingNode);
+
+        return arrayInO;
+    }
+    preOrder()
+    {
+        let arrayPreO = [];
+        let startingNode = this.root;
+
+        function preOrderRecursion(node){
+            if(node == null){
+                return;
+            }
+            arrayPreO.push(node.data);
+            preOrderRecursion(node.left);
+            preOrderRecursion(node.right);
+        }
+
+        preOrderRecursion(startingNode);
+
+        return arrayPreO;
+    }
+    postOrder()
+    {
+        let arrayPostO = [];
+        function postOrderRecursion(node){
+            if(node == null)
+            {return;}
+            postOrderRecursion(node.left);
+            postOrderRecursion(node.right);
+            arrayPostO.push(node.data);
+        }
+
+        postOrderRecursion(this.root);
+        return arrayPostO;
+    }
+
+    height(node)
+    {
+        let hActual = 0;
+        let h = 0;
+
+        function heightRec(anode){
+
+            if(anode == null){ 
+                h--;
+                if(hActual < h)
+                {
+                    hActual = h;
+                }
+                return;
+            }
+            else
+            {
+                ++h;
+                heightRec(anode.left)
+                heightRec(anode.right)
+                --h;
+                
+            }
+
+        }
+        heightRec(node);
+
+        return hActual;
+
+    }
+    depth(node){
+        let foundNode = this.root;
+        let d = 0;
+        while(node.data != foundNode.data)
+        {
+            if(node.data < foundNode.data)
+            {
+                foundNode = foundNode.left;
+                d++;
+            }
+            else if(node.data > foundNode.data)
+            {
+                foundNode = foundNode.right;
+                d++;
+            }
+        }
+
+        return d;
+    }
 }
 
 function buildTree(arr) {
@@ -207,7 +331,7 @@ function treeRec(arr2){
     return newNode;
 }
 
-let newTree = new Tree([200,210,220,230,240,250,260,270,280,290,20,150,160,170,180,190,10,120,70,40,110,30,60,130,140,90,80,100]);
+let newTree = new Tree([20,150,160,50,170,180,190,10,120,70,40,110,30,60,130,140,90,80,100]);
 
 
 prettyPrint(newTree.root);
@@ -225,9 +349,17 @@ console.log();
 // prettyPrint(newTree.root);
 
 
-newTree.delete(100);
-newTree.insert(125);
-newTree.insert(115);
 prettyPrint(newTree.root);
-newTree.delete(90);
 prettyPrint(newTree.root);
+
+console.log(newTree.levelOrder());
+
+prettyPrint(newTree.root);
+
+console.log(newTree.postOrder());
+
+prettyPrint(newTree.root);
+
+// console.log(newTree.depth(newTree.root.left.right.left));
+
+console.log(newTree.height(newTree.root.right));
