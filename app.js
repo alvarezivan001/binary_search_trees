@@ -57,7 +57,7 @@ class Tree {
         }
         if(tempNode.left == null && tempNode.right == null)
         {
-            if(prevNode.left.data == tempNode.data)
+            if(prevNode.left == tempNode)
             {
                 prevNode.left = null;
             }
@@ -303,7 +303,9 @@ class Tree {
         console.log("is balanced: " + balanced);
     }
     reBalance(){
+        let tempArray  = this.inOrder();
 
+        this.root = buildTree(tempArray);
     }
 }
 
@@ -378,43 +380,89 @@ function treeRec(arr2){
     return newNode;
 }
 
-let newTree = new Tree([20,150,160,50,170,180,190,10,120,70,40,110,30,60,130,140,90,80,100]);
+// let newTree = new Tree([20,150,160,50,170,180,190,10,120,70,40,110,30,60,130,140,90,80,100]);
 
-
-prettyPrint(newTree.root);
-
-
-console.log();
-
-// newTree.delete(130);
-
-// prettyPrint(newTree.root);
-
-// newTree.delete(140);
-// newTree.delete(60);
 
 // prettyPrint(newTree.root);
 
 
-prettyPrint(newTree.root);
-prettyPrint(newTree.root);
+// console.log();
 
-console.log(newTree.levelOrder());
+// // newTree.delete(130);
 
-prettyPrint(newTree.root);
+// // prettyPrint(newTree.root);
 
-console.log(newTree.postOrder());
+// // newTree.delete(140);
+// // newTree.delete(60);
 
-prettyPrint(newTree.root);
+// // prettyPrint(newTree.root);
 
-// console.log(newTree.depth(newTree.root.left.right.left));
 
-console.log(newTree.depth(newTree.root.right.right));
+// prettyPrint(newTree.root);
+// prettyPrint(newTree.root);
 
-newTree.delete(160);
-newTree.delete(170);
-//
-prettyPrint(newTree.root);
-newTree.delete(190);
+// console.log(newTree.levelOrder());
 
-newTree.isBalanced();
+// prettyPrint(newTree.root);
+
+// console.log(newTree.postOrder());
+
+// prettyPrint(newTree.root);
+
+// // console.log(newTree.depth(newTree.root.left.right.left));
+
+// console.log(newTree.depth(newTree.root.right.right));
+
+// newTree.delete(160);
+// newTree.delete(170);
+// //
+// prettyPrint(newTree.root);
+// newTree.delete(190);
+
+// prettyPrint(newTree.root);
+
+// newTree.isBalanced();
+
+// newTree.reBalance();
+
+// prettyPrint(newTree.root);
+
+const driver = () => {
+
+    let ourArray = ranArray(25,1,100);
+
+    let firstTree = new Tree(ourArray);
+    prettyPrint(firstTree.root);
+    firstTree.isBalanced();
+    console.log(firstTree.levelOrder());
+    console.log(firstTree.preOrder());
+    console.log(firstTree.postOrder());
+    console.log(firstTree.inOrder());
+    
+    let addNums = ranArray(8,101,200);
+    while(addNums.length != 0)
+    {
+        firstTree.insert(addNums.shift());
+    }
+    prettyPrint(firstTree.root);
+    firstTree.isBalanced();
+    firstTree.reBalance();
+    prettyPrint(firstTree.root);
+    firstTree.isBalanced();
+    console.log(firstTree.levelOrder());
+    console.log(firstTree.preOrder());
+    console.log(firstTree.postOrder());
+    console.log(firstTree.inOrder());
+}
+
+function ranArray (amt, min, max) {
+
+    let arr = []
+    for(let i = 0; i < amt; i++){
+        arr.push(Math.floor(Math.random()*max + min));
+    }
+
+    return arr;
+};
+
+driver();
